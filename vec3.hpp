@@ -175,4 +175,28 @@ inline vec3 unit_vector(vec3 const & v) {
     return v / v.length();
 }
 
+inline vec3 random_in_unit_sphere() {
+    vec3 p;
+    do {
+        p = 2.0f * vec3(drand48(), drand48(), drand48()) - vec3(1,1,1);
+    } while (p.squared_length() >= 1.0f);
+    return p;
+}
+
+inline vec3 reflect(vec3 const & v, vec3 const & n) {
+    return v - 2.0f * dot(v,n)*n;
+}
+
+inline bool refract(vec3 const & v, vec3 const & n, float ni_over_nt, vec3 & refracted) {
+    vec3 uv = unit_vector(v);
+    float dt = dot(uv, n);
+    float discriminant = 1.0f - ni_over_nt * ni_over_nt * (1.0f - dt * dt);
+    if (discriminant > 0) {
+        refracted = ni_over_nt * (uv - n*dt) - n * sqrt(discriminant);
+        return true;
+    } else {
+        return false;
+    }
+}
+
 #endif

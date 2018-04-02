@@ -5,8 +5,8 @@
 
 class sphere: public hitable {
     public:
-        sphere() {}
-        sphere(vec3 const & cen, float r) : center(cen), radius(r) {};
+        sphere() : pMat(nullptr) {}
+        sphere(vec3 const & cen, float r, material const * const mat) : center(cen), radius(r), pMat(mat) {};
         virtual bool hit(
             ray const & r,
             float t_min,
@@ -15,6 +15,7 @@ class sphere: public hitable {
         ) const;
         vec3 center;
         float radius;
+        material const * pMat;
 };
 
 bool sphere::hit(
@@ -37,6 +38,7 @@ bool sphere::hit(
             hr.t = temp;
             hr.p = r.point_at_parameter(temp);
             hr.normal = (hr.p - center) / radius;
+            hr.pMat = pMat;
             return true;
         }
         temp = (-b + root) / a;
@@ -44,6 +46,7 @@ bool sphere::hit(
             hr.t = temp;
             hr.p = r.point_at_parameter(temp);
             hr.normal = (hr.p - center) / radius;
+            hr.pMat = pMat;
             return true;
         }
     }
