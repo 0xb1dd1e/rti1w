@@ -6,34 +6,34 @@
 class sphere: public hitable {
     public:
         sphere() : pMat(nullptr) {}
-        sphere(vec3 const & cen, float r, material const * const mat) : center(cen), radius(r), pMat(mat) {};
+        sphere(vec3 const & cen, double r, material const * const mat) : center(cen), radius(r), pMat(mat) {};
         virtual bool hit(
             ray const & r,
-            float t_min,
-            float t_max,
+            double t_min,
+            double t_max,
             hit_record & hr
         ) const;
         vec3 center;
-        float radius;
+        double radius;
         material const * pMat;
 };
 
 bool sphere::hit(
             ray const & r,
-            float t_min,
-            float t_max,
+            double t_min,
+            double t_max,
             hit_record & hr
         ) const {
 
 
     vec3 oc = r.origin() - center;
-    float a = dot(r.direction(), r.direction());
-    float b = dot(oc, r.direction());
-    float c = dot(oc, oc) - radius * radius;
-    float discriminant = b*b - a*c;
+    double a = dot(r.direction(), r.direction());
+    double b = dot(oc, r.direction());
+    double c = dot(oc, oc) - radius * radius;
+    double discriminant = b*b - a*c;
     if (discriminant > 0) {
-        float root = sqrt(discriminant);
-        float temp = (-b - root) / a;
+        double root = sqrt(discriminant);
+        double temp = (-b - root) / a;
         if (temp < t_max && temp > t_min) {
             hr.t = temp;
             hr.p = r.point_at_parameter(temp);

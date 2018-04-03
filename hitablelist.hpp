@@ -9,8 +9,8 @@ class hitable_list: public hitable {
         hitable_list(hitable **l, int n) { list = l; list_size = n; }
         virtual bool hit(
             ray const & r,
-            float t_min,
-            float t_max,
+            double t_min,
+            double t_max,
             hit_record & hr
         ) const;
         hitable **list;
@@ -20,8 +20,8 @@ class hitable_list: public hitable {
 
 bool hitable_list::hit(
             ray const & r,
-            float t_min,
-            float t_max,
+            double t_min,
+            double t_max,
             hit_record & hr
         ) const {
 
